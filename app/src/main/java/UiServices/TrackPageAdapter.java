@@ -11,11 +11,11 @@ public class TrackPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        return null;
+        return new TrackFragment();
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return 3;
     }
 }
