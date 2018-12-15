@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import com.squidswap.songshare.songshare.R;
 
 public class TrackFragment extends Fragment {
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,8 @@ public class TrackFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.track_fragment, container, false);
+        View v = inflater.inflate(R.layout.track_fragment,container,false);
+
+        return v;
     }
 }
