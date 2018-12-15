@@ -5,4 +5,8 @@
     <string name="copyright">Songshare Beta V1.0, Squid Ink.</string>
     <string name="streamview_stream_toggle">Streams</string>
     <string name="streamview_friends_toggle">Friends</string>
+
+    <string name="username_placeholder">[Username]</string>
+    <string name="track_share_count_placeholder">Tracks Shared\n 0</string>
+    <string name="friends_count_placeholder">Friends\n 0</string>
 </resources>

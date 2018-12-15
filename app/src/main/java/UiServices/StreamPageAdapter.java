@@ -12,8 +12,14 @@ public class StreamPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int i) {
-        Log.d("STREAM PAGE ADAPTER","Current Page: " +  String.valueOf(i));
-        return null;
+        switch(i){
+            case 0:
+                return new StreamViewProfileFragment();
+            case 1:
+                return new StreamViewMusicFragment();
+            default:
+                return new StreamViewMusicFragment();
+        }
     }
 
     @Override
