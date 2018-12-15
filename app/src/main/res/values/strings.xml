@@ -3,4 +3,6 @@
     <string name="login_button">Login</string>
     <string name="sign_up_button">Sign Up</string>
     <string name="copyright">Songshare Beta V1.0, Squid Ink.</string>
+    <string name="streamview_stream_toggle">Streams</string>
+    <string name="streamview_friends_toggle">Friends</string>
 </resources>
