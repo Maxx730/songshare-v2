@@ -32,7 +32,7 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Temporary for UI demo purposes.
-                Intent i = new Intent(getApplicationContext(),StreamScreen.class);
+                Intent i = new Intent(getApplicationContext(),MainFragmentManager.class);
                 startActivity(i);
             }
         });

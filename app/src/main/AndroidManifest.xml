@@ -15,7 +15,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".StreamScreen" />
         <activity android:name=".SignUpScreen" />
         <activity android:name=".MainFragmentManager">
             <intent-filter>

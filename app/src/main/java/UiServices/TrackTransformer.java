@@ -26,22 +26,18 @@ public class TrackTransformer implements ViewPager.PageTransformer {
             if(position < 0){
                 float scale = page.getScaleX() + position;
                 if(position < 0 && scale > .6f){
-                    page.setAlpha(scale);
                     page.setScaleX(page.getScaleX() + position);
                     page.setScaleY(page.getScaleY() + position);
                 }else{
-                    page.setAlpha(1);
                     page.setScaleX(.6f);
                     page.setScaleY(.6f);
                 }
             }else{
                 float scale = page.getScaleX() - position;
                 if(position > 0 && scale > .6f){
-                    page.setAlpha(scale);
                     page.setScaleX(page.getScaleX() - position);
                     page.setScaleY(page.getScaleY() - position);
                 }else{
-                    page.setAlpha(1);
                     page.setScaleX(.6f);
                     page.setScaleY(.6f);
                 }
