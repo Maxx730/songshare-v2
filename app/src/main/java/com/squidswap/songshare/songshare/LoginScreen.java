@@ -22,8 +22,7 @@ public class LoginScreen extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login_screen);
 
-        //Grab UI elements.
-        LoginButton = (Button) findViewById(R.id.LoginToggle);
+        LoginButton = (Button) findViewById(R.id.LoginButton);
 
         SetListeners();
     }
