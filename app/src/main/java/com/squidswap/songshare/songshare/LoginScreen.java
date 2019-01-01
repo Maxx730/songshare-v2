@@ -1,6 +1,7 @@
 package com.squidswap.songshare.songshare;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +14,7 @@ import java.util.Set;
 public class LoginScreen extends AppCompatActivity {
 
     private Button LoginButton;
+    private SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class LoginScreen extends AppCompatActivity {
         getSupportActionBar().hide();
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.login_screen);
+
+        shared = getSharedPreferences("songshare-prefs",MODE_PRIVATE);
 
         LoginButton = (Button) findViewById(R.id.LoginButton);
 
@@ -32,6 +36,8 @@ public class LoginScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Temporary for UI demo purposes.
+                shared.edit().putInt("logged-in",1).commit();
+
                 Intent i = new Intent(getApplicationContext(),MainFragmentManager.class);
                 startActivity(i);
             }

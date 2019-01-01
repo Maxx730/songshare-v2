@@ -1,5 +1,7 @@
 package com.squidswap.songshare.songshare;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 public class MainFragmentManager extends AppCompatActivity implements StreamFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener {
 
@@ -29,6 +32,8 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
     private FrameLayout Content;
     private FragmentTransaction trans;
     private StreamFragment streams;
+
+    private SharedPreferences shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +49,20 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
         FadeOut = new AlphaAnimation(1,0);
         FadeOut.setDuration(ANIM_LENGTH);
 
-        SetListeners();
-        InitElements();
+        shared = getSharedPreferences("songshare-prefs",MODE_PRIVATE);
 
-        streams = new StreamFragment();
+        //Check if the user has logged in or not, if not send them back to the login screen
+        if(shared.getInt("logged-in",0) == 1){
+            SetListeners();
+            InitElements();
+
+            streams = new StreamFragment();
+        }else{
+            Toast.makeText(getApplicationContext(),"working",Toast.LENGTH_LONG).show();
+
+            Intent i = new Intent(getApplicationContext(),LoginScreen.class);
+            startActivity(i);
+        }
     }
 
     private void InitElements(){
@@ -84,6 +99,7 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
             @Override
             public void onClick(View view) {
                 ClearToggles(StreamToggle);
+                ToggleMenu(false);
                 FragmentTransaction frag = getSupportFragmentManager().beginTransaction();
                 frag.replace(R.id.SelectedContent,new StreamFragment());
                 frag.commitNowAllowingStateLoss();
@@ -94,7 +110,7 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
             @Override
             public void onClick(View view) {
                 ClearToggles(ProfileToggle);
-
+                ToggleMenu(false);
                 FragmentTransaction frag = getSupportFragmentManager().beginTransaction();
                 frag.replace(R.id.SelectedContent,new ProfileFragment());
                 frag.commit();
@@ -105,6 +121,7 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
             @Override
             public void onClick(View view) {
                 ClearToggles(SettingsToggle);
+                ToggleMenu(false);
             }
         });
     }
