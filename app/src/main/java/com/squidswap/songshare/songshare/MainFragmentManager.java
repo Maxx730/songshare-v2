@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,21 +21,23 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class MainFragmentManager extends AppCompatActivity implements StreamFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener {
+public class MainFragmentManager extends AppCompatActivity implements StreamFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,PreferencesFragment.OnFragmentInteractionListener {
 
     private boolean MENU_OPEN = false;
     private int MENU_WIDTH = 5,ANIM_LENGTH = 250;
+    private float StartX,OldX;
 
     private RelativeLayout MenuSide,ContentSide;
     private ImageButton OpenMenu,CloseMenu,StreamToggle,ProfileToggle,SettingsToggle;
     private Animation FadeIn,FadeOut;
-    private FrameLayout Content;
+    private FrameLayout Content,MenuTouch;
     private FragmentTransaction trans;
     private StreamFragment streams;
-
+    private LinearLayout NavTop;
     private SharedPreferences shared;
 
     @Override
@@ -70,27 +75,49 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
         MenuSide = (RelativeLayout) findViewById(R.id.MenuSide);
         ContentSide = (RelativeLayout) findViewById(R.id.ContentSide);
         OpenMenu = (ImageButton) findViewById(R.id.OpenMenuButton);
-        CloseMenu = (ImageButton) findViewById(R.id.CloseToggle);
         StreamToggle = (ImageButton) findViewById(R.id.StreamToggle);
         ProfileToggle = (ImageButton) findViewById(R.id.ProfileToggle);
         SettingsToggle = (ImageButton) findViewById(R.id.SettingsToggle);
+        NavTop = (LinearLayout) findViewById(R.id.NavTop);
+        MenuTouch = (FrameLayout) findViewById(R.id.MenuTouchLayout);
 
         InitClickEvents();
     }
 
     private void InitClickEvents(){
+        MenuTouch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        Log.d("MENU TOUCH ::: ","Down");
+                        OldX = event.getX();
+                    break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.d("MENU TOUCH ::: ",String.valueOf(OldX - event.getX()));
+
+                        if(OldX - event.getX() < 0){
+                            Log.d("MENU TOUCH ::: ","Opening");
+                            MenuSide.setTranslationX(MenuSide.getTranslationX() - (OldX - event.getX()));
+                        }else{
+                            Log.d("MENU TOUCH ::: ","Closing");
+                            MenuSide.setTranslationX(MenuSide.getTranslationX() - (OldX - event.getX()));
+                        }
+
+                        OldX = event.getX();
+                    break;
+                    case MotionEvent.ACTION_UP:
+                        Log.d("MENU TOUCH ::: ","Up");
+                    break;
+                }
+                return true;
+            }
+        });
+
         OpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MENU_OPEN = true;
-                ToggleMenu(MENU_OPEN);
-            }
-        });
-
-        CloseMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MENU_OPEN = false;
                 ToggleMenu(MENU_OPEN);
             }
         });
@@ -122,6 +149,9 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
             public void onClick(View view) {
                 ClearToggles(SettingsToggle);
                 ToggleMenu(false);
+                FragmentTransaction frag = getSupportFragmentManager().beginTransaction();
+                frag.replace(R.id.SelectedContent,new PreferencesFragment());
+                frag.commit();
             }
         });
     }
@@ -136,11 +166,9 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
 
     private void ToggleMenu(boolean val){
         if(val){
-            OpenMenu.startAnimation(FadeOut);
-            MenuSide.setVisibility(View.VISIBLE);
+            NavTop.startAnimation(FadeOut);
         }else{
-            OpenMenu.startAnimation(FadeIn);
-            MenuSide.setVisibility(View.GONE);
+
         }
     }
 
@@ -153,7 +181,7 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                OpenMenu.setVisibility(View.VISIBLE);
+
             }
 
             @Override
@@ -170,7 +198,7 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                OpenMenu.setVisibility(View.INVISIBLE);
+
             }
 
             @Override

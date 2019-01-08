@@ -32,6 +32,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/track_name"
             android:fontFamily="@font/cabin"
             android:padding="15dp"
             android:text="@string/track_fragment_track"

@@ -6,4 +6,9 @@
 
     <color name="purple">#941AD2</color>
 
+    <color name="gray_1">#EBEBEB</color>
+    <color name="gray_2">#D4D4D4</color>
+    <color name="gray_3"></color>
+    <color name="gray_4"></color>
+
 </resources>
