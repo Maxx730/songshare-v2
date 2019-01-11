@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +33,6 @@ public class StreamFragment extends Fragment {
     private StreamPageAdapter StreamAdapter;
 
     public StreamFragment() {
-        // Required empty public constructor
     }
 
     public static StreamFragment newInstance(String param1, String param2) {
@@ -48,11 +48,8 @@ public class StreamFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
-
-
     }
 
     @Override
@@ -62,11 +59,12 @@ public class StreamFragment extends Fragment {
         View layout = inflater.inflate(R.layout.stream_screen, container, false);
 
         StreamPager = (ViewPager) layout.findViewById(R.id.TrackPager);
-        StreamAdapter = new StreamPageAdapter(getActivity().getSupportFragmentManager());
+        StreamAdapter = new StreamPageAdapter(getChildFragmentManager());
 
         StreamPager.setOffscreenPageLimit(3);
         StreamPager.setPageTransformer(true, new TrackTransformer());
         StreamPager.setAdapter(StreamAdapter);
+        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) StreamPager.getLayoutParams();
 
         return layout;
     }

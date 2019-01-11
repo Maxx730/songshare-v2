@@ -1,29 +1,33 @@
 package com.squidswap.songshare.songshare;
 
+import android.Manifest;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.net.Uri;
-import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import org.json.JSONObject;
+
+import NetworkServices.NetworkResponseInterface;
+import NetworkServices.UserServices;
 
 public class MainFragmentManager extends AppCompatActivity implements StreamFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,PreferencesFragment.OnFragmentInteractionListener {
 
@@ -31,14 +35,17 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
     private int MENU_WIDTH = 5,ANIM_LENGTH = 250;
     private float StartX,OldX;
 
-    private RelativeLayout MenuSide,ContentSide;
-    private ImageButton OpenMenu,CloseMenu,StreamToggle,ProfileToggle,SettingsToggle;
-    private Animation FadeIn,FadeOut;
+    private RelativeLayout MenuSide,ContentSide,MenuShade;
+    private ImageButton OpenMenu,CloseMenu;
+    private Animation FadeIn,FadeOut,SlideIn;
     private FrameLayout Content,MenuTouch;
     private FragmentTransaction trans;
     private StreamFragment streams;
-    private LinearLayout NavTop;
+    private LinearLayout NavTop,StreamToggle,ProfileToggle,SettingsToggle;
     private SharedPreferences shared;
+    private ValueAnimator ValueAnim,SlideOut;
+    private FragmentTransaction frag;
+    private StreamFragment streamfrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +55,8 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main_fragment_manager);
 
-        FadeIn = new AlphaAnimation(0,1);
-        FadeIn.setDuration(ANIM_LENGTH);
-
-        FadeOut = new AlphaAnimation(1,0);
-        FadeOut.setDuration(ANIM_LENGTH);
+        ValueAnim = ValueAnimator.ofInt(0,900);
+        SlideOut = ValueAnimator.ofInt(900,0);
 
         shared = getSharedPreferences("songshare-prefs",MODE_PRIVATE);
 
@@ -61,10 +65,11 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
             SetListeners();
             InitElements();
 
-            streams = new StreamFragment();
+            frag = getSupportFragmentManager().beginTransaction();
+            streamfrag = new StreamFragment();
+            frag.replace(R.id.SelectedContent,streamfrag);
+            frag.commit();
         }else{
-            Toast.makeText(getApplicationContext(),"working",Toast.LENGTH_LONG).show();
-
             Intent i = new Intent(getApplicationContext(),LoginScreen.class);
             startActivity(i);
         }
@@ -75,137 +80,146 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
         MenuSide = (RelativeLayout) findViewById(R.id.MenuSide);
         ContentSide = (RelativeLayout) findViewById(R.id.ContentSide);
         OpenMenu = (ImageButton) findViewById(R.id.OpenMenuButton);
-        StreamToggle = (ImageButton) findViewById(R.id.StreamToggle);
-        ProfileToggle = (ImageButton) findViewById(R.id.ProfileToggle);
-        SettingsToggle = (ImageButton) findViewById(R.id.SettingsToggle);
+        StreamToggle = (LinearLayout) findViewById(R.id.StreamToggleLayout);
+        ProfileToggle = (LinearLayout) findViewById(R.id.ProfileToggleLayout);
+        SettingsToggle = (LinearLayout) findViewById(R.id.SettingsToggleLayout);
         NavTop = (LinearLayout) findViewById(R.id.NavTop);
         MenuTouch = (FrameLayout) findViewById(R.id.MenuTouchLayout);
+        MenuShade = (RelativeLayout) findViewById(R.id.MenuShade);
+
+        ValueAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+
+                ViewGroup.LayoutParams lay = MenuSide.getLayoutParams();
+                lay.width = value;
+                MenuSide.setLayoutParams(lay);
+            }
+        });
+        ValueAnim.setDuration(ANIM_LENGTH);
+
+        SlideOut.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+
+                ViewGroup.LayoutParams lay = MenuSide.getLayoutParams();
+                lay.width = value;
+                MenuSide.setLayoutParams(lay);
+            }
+        });
+        SlideOut.setDuration(ANIM_LENGTH);
 
         InitClickEvents();
     }
 
     private void InitClickEvents(){
-        MenuTouch.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch(event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        Log.d("MENU TOUCH ::: ","Down");
-                        OldX = event.getX();
-                    break;
-                    case MotionEvent.ACTION_MOVE:
-                        Log.d("MENU TOUCH ::: ",String.valueOf(OldX - event.getX()));
-
-                        if(OldX - event.getX() < 0){
-                            Log.d("MENU TOUCH ::: ","Opening");
-                            MenuSide.setTranslationX(MenuSide.getTranslationX() - (OldX - event.getX()));
-                        }else{
-                            Log.d("MENU TOUCH ::: ","Closing");
-                            MenuSide.setTranslationX(MenuSide.getTranslationX() - (OldX - event.getX()));
-                        }
-
-                        OldX = event.getX();
-                    break;
-                    case MotionEvent.ACTION_UP:
-                        Log.d("MENU TOUCH ::: ","Up");
-                    break;
-                }
-                return true;
-            }
-        });
-
         OpenMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MENU_OPEN = true;
-                ToggleMenu(MENU_OPEN);
+                if(!MENU_OPEN){
+                    ValueAnim.start();
+                    MenuShade.setVisibility(View.VISIBLE);
+                    MENU_OPEN = true;
+                }
             }
         });
 
         StreamToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClearToggles(StreamToggle);
+                ClearToggles(StreamToggle,R.color.colorPrimary);
+                ClearToggles(ProfileToggle,R.color.gray_2);
+                ClearToggles(SettingsToggle,R.color.gray_2);
+
                 ToggleMenu(false);
                 FragmentTransaction frag = getSupportFragmentManager().beginTransaction();
-                frag.replace(R.id.SelectedContent,new StreamFragment());
-                frag.commitNowAllowingStateLoss();
+                StreamFragment streamfrag = new StreamFragment();
+                frag.replace(R.id.SelectedContent,streamfrag);
+                frag.commit();
+
+                if(MENU_OPEN){
+                    SlideOut.start();
+                    MenuShade.setVisibility(View.GONE);
+                    MENU_OPEN = false;
+                }
             }
         });
 
         ProfileToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClearToggles(ProfileToggle);
+                ClearToggles(ProfileToggle,R.color.colorPrimary);
+                ClearToggles(StreamToggle,R.color.gray_2);
+                ClearToggles(SettingsToggle,R.color.gray_2);
+
                 ToggleMenu(false);
                 FragmentTransaction frag = getSupportFragmentManager().beginTransaction();
                 frag.replace(R.id.SelectedContent,new ProfileFragment());
                 frag.commit();
+
+                if(MENU_OPEN){
+                    SlideOut.start();
+                    MenuShade.setVisibility(View.GONE);
+                    MENU_OPEN = false;
+                }
             }
         });
 
         SettingsToggle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClearToggles(SettingsToggle);
+                ClearToggles(SettingsToggle,R.color.colorPrimary);
+                ClearToggles(StreamToggle,R.color.gray_2);
+                ClearToggles(ProfileToggle,R.color.gray_2);
+
                 ToggleMenu(false);
                 FragmentTransaction frag = getSupportFragmentManager().beginTransaction();
                 frag.replace(R.id.SelectedContent,new PreferencesFragment());
                 frag.commit();
+
+                if(MENU_OPEN){
+                    SlideOut.start();
+                    MenuShade.setVisibility(View.GONE);
+                    MENU_OPEN = false;
+                }
+            }
+        });
+
+        MenuShade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(MENU_OPEN){
+                    SlideOut.start();
+                    MenuShade.setVisibility(View.GONE);
+                    MENU_OPEN = false;
+                }
             }
         });
     }
 
-    private void ClearToggles(ImageButton selected){
-        StreamToggle.setImageTintList(null);
-        ProfileToggle.setImageTintList(null);
-        SettingsToggle.setImageTintList(null);
+    private void ClearToggles(LinearLayout selected,int color){
+        for(int i = 0;i < selected.getChildCount();i++){
+            View v = selected.getChildAt(i);
 
-        selected.setImageTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-    }
+            if(v instanceof ImageButton){
+                Log.d("TOGGLE ::: ",v.getClass().getName());
+                ImageButton but = (ImageButton) v;
+                but.setImageTintList(ColorStateList.valueOf(getResources().getColor(color)));
+            }
 
-    private void ToggleMenu(boolean val){
-        if(val){
-            NavTop.startAnimation(FadeOut);
-        }else{
-
+            v.setForegroundTintList(ColorStateList.valueOf(getResources().getColor(color)));
+            v.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(color)));
         }
     }
 
+    private void ToggleMenu(boolean val){
+
+    }
+
     private void SetListeners(){
-        FadeIn.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
 
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        FadeOut.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
     }
 
     @Override

@@ -9,138 +9,6 @@
     tools:context=".MainFragmentManager">
 
     <RelativeLayout
-        android:id="@+id/MenuSide"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="6"
-        android:background="@android:color/background_light"
-        android:clipToPadding="false"
-        android:elevation="24dp"
-        android:paddingTop="20dp"
-        android:paddingRight="20dp"
-        android:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <RelativeLayout
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@drawable/profile_circle">
-
-                </RelativeLayout>
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cabin"
-                    android:padding="7dp"
-                    android:text="TextView"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/SettingsToggle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:padding="15dp"
-                    app:srcCompat="@drawable/ic_twotone_settings_24px" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/cabin"
-                    android:gravity="center_vertical"
-                    android:padding="7dp"
-                    android:text="@string/action_settings"
-                    android:textAllCaps="true"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/ProfileToggle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:padding="15dp"
-                    app:srcCompat="@drawable/ic_twotone_person_outline_24px" />
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/cabin"
-                    android:gravity="center_vertical"
-                    android:padding="7dp"
-                    android:text="@string/streamview_profile_toggle"
-                    android:textAllCaps="true"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingRight="16dp">
-
-                <ImageButton
-                    android:id="@+id/StreamToggle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:padding="15dp"
-                    android:tint="@color/colorPrimary"
-                    app:srcCompat="@drawable/ic_twotone_view_stream_24px" />
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/cabin"
-                    android:gravity="center_vertical"
-                    android:padding="7dp"
-                    android:text="@string/streamview_stream_toggle"
-                    android:textAllCaps="true"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/ContentSide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -172,10 +40,21 @@
                     android:layout_height="match_parent"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
+                    android:background="@android:color/transparent"
                     android:ems="10"
                     android:hint="Search"
                     android:inputType="textPersonName"
                     android:padding="10dp" />
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="58dp"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dp"
+                    android:paddingRight="15dp"
+                    android:paddingBottom="10dp"
+                    android:tint="@color/gray_2"
+                    app:srcCompat="@drawable/ic_search_black_24dp" />
 
             </LinearLayout>
 
@@ -186,4 +65,237 @@
         </LinearLayout>
 
     </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/MenuShade"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".4"
+        android:background="@android:color/background_dark"
+        android:clickable="true"
+        android:visibility="gone">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/MenuSide"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/menu_background"
+        android:clipToPadding="false"
+        android:elevation="24dp"
+        android:paddingTop="20dp"
+        android:translationX="0dp"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <RelativeLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/profile_circle">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_centerInParent="true"
+                        android:tint="@color/gray_2"
+                        app:srcCompat="@drawable/ic_twotone_person_outline_24px" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/cabin"
+                    android:padding="7dp"
+                    android:text="Profile Username"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/StreamToggleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/side_menu_item"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/StreamToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/ic_twotone_view_stream_24px" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/cabin"
+                    android:gravity="center_vertical"
+                    android:padding="7dp"
+                    android:paddingBottom="9dp"
+                    android:text="@string/streamview_stream_toggle"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/indicator_icon">
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ProfileToggleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/side_menu_item"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ProfileToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    app:srcCompat="@drawable/ic_twotone_person_outline_24px" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/cabin"
+                    android:gravity="center_vertical"
+                    android:padding="7dp"
+                    android:paddingBottom="9dp"
+                    android:text="@string/streamview_profile_toggle"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/indicator_icon_dim">
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/InviteToggleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/side_menu_item"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/InviteToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    app:srcCompat="@drawable/ic_local_activity_black_24dp" />
+
+                <TextView
+                    android:id="@+id/ToggleText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/cabin"
+                    android:gravity="center_vertical"
+                    android:padding="7dp"
+                    android:paddingBottom="9dp"
+                    android:text="@string/streamview_invites_toggle"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/indicator_icon_dim">
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/SettingsToggleLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/side_menu_item"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/SettingsToggle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="15dp"
+                    app:srcCompat="@drawable/ic_twotone_settings_24px" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/cabin"
+                    android:gravity="center_vertical"
+                    android:padding="7dp"
+                    android:paddingBottom="9dp"
+                    android:text="@string/action_settings"
+                    android:textAllCaps="false"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <RelativeLayout
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/indicator_icon_dim">
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </FrameLayout>

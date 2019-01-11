@@ -4,108 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:clipToPadding="false"
     tools:context=".LoginScreen">
 
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:clipToPadding="false"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/border_bottom">
 
-        <TextView
-            android:id="@+id/AppTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="35dp"
-            android:text="@string/app_name"
-            android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/UsernameTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingBottom="7dp"
-            android:text="Username" />
-
-        <EditText
-            android:id="@+id/LoginUsernameField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/white_outline_textfield"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:padding="10dp" />
-
-        <TextView
-            android:id="@+id/PasswordTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="5dp"
-            android:paddingBottom="7dp"
-            android:text="Password" />
-
-        <EditText
-            android:id="@+id/LoginPasswordField"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/white_outline_textfield"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:padding="10dp" />
-
-        <TextView
-            android:id="@+id/ForgotPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:paddingTop="5dp"
-            android:text="Forgot Password?" />
-
-        <Button
-            android:id="@+id/LoginButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/button_light"
-            android:text="@string/login_button" />
-
-        <RelativeLayout
+        <android.support.v4.view.ViewPager
+            android:id="@+id/LoginPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:padding="20dp" />
+    </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/need_an_account" />
-
-                <TextView
-                    android:id="@+id/SignUpText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="7dp"
-                    android:text="@string/sign_up_now" />
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
 </RelativeLayout>

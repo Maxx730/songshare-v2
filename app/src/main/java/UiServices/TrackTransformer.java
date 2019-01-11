@@ -15,9 +15,6 @@ public class TrackTransformer implements ViewPager.PageTransformer {
 
     @Override
     public void transformPage(@NonNull final View page, float position) {
-        TextView t = (TextView) page.findViewById(R.id.FragmentPosition);
-        t.setText(String.valueOf(position));
-
         //Scale down every card.
         page.setScaleX(0.9f);
         page.setScaleY(0.9f);
