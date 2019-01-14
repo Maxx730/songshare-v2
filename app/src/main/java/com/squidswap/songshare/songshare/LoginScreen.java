@@ -15,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,7 @@ public class LoginScreen extends AppCompatActivity {
 
     private void InitElements(){
         LoginPag = (ViewPager) findViewById(R.id.LoginPager);
+
 
         //Set up the login pager for the login screen.
         Adapt = new LoginPageAdapter(getSupportFragmentManager());

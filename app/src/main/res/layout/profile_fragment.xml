@@ -25,7 +25,7 @@
             android:elevation="9dp">
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/LargeProfileImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -78,19 +78,37 @@
                     android:padding="10dp">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/SmallProfileImage"
                         android:layout_width="128dp"
                         android:layout_height="128dp"
                         android:scaleType="centerCrop"
                         android:src="@drawable/default_profile" />
 
-                    <TextView
-                        android:id="@+id/textView9"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="20dp"
-                        android:text="[Username]"
-                        android:textSize="24sp" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/UsernameDisplay"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin"
+                            android:paddingLeft="20dp"
+                            android:text="[Username]"
+                            android:textAllCaps="true"
+                            android:textSize="24sp" />
+
+                        <TextView
+                            android:id="@+id/JoinDate"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/cabin"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="6dp"
+                            android:text="[Join Date]" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout

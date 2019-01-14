@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:padding="15dp"
-                    android:tint="@color/colorPrimary"
+                    android:tint="@color/gray_2"
                     app:srcCompat="@drawable/ic_twotone_view_stream_24px" />
 
                 <TextView
@@ -183,6 +183,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:padding="15dp"
+                    android:tint="@color/gray_2"
                     app:srcCompat="@drawable/ic_twotone_person_outline_24px" />
 
                 <TextView
@@ -225,7 +226,8 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:padding="15dp"
-                    app:srcCompat="@drawable/ic_local_activity_black_24dp" />
+                    android:tint="@color/gray_2"
+                    app:srcCompat="@drawable/ic_twotone_local_activity_24px" />
 
                 <TextView
                     android:id="@+id/ToggleText"
@@ -267,6 +269,7 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
                     android:padding="15dp"
+                    android:tint="@color/gray_2"
                     app:srcCompat="@drawable/ic_twotone_settings_24px" />
 
                 <TextView

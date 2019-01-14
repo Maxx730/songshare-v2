@@ -5,20 +5,30 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import NetworkServices.NetworkResponseInterface;
 import NetworkServices.UserServices;
+import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class ProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private UserServices UserServ;
     private SharedPreferences prefs;
+    private ImageView SmallProfile,LargeProfile;
+    private TextView UsernameDisplay,JoinDate;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -37,7 +47,17 @@ public class ProfileFragment extends Fragment {
         UserServ = new UserServices(getActivity().getApplicationContext(), new NetworkResponseInterface() {
             @Override
             public void OnResponse(JSONObject response) {
-                Toast.makeText(getActivity().getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+            try{
+                String url = response.getString("profile");
+                String name = response.getString("username");
+
+                Glide.with(getActivity().getApplicationContext()).load(url).into(SmallProfile);
+                Glide.with(getActivity().getApplicationContext()).load(url).apply(RequestOptions.bitmapTransform(new BlurTransformation(25,5))).into(LargeProfile);
+                UsernameDisplay.setText(name);
+            }catch(JSONException e){
+                Log.d("PROFILE FRAGMENT :::: ","Error grabbing date...");
+                e.printStackTrace();
+            }
             }
         });
 
@@ -49,8 +69,11 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.profile_fragment, container, false);
 
-        //Grab information on the logged in user to fill out the information on the profile
-        //page.
+        SmallProfile = (ImageView) v.findViewById(R.id.SmallProfileImage);
+        LargeProfile = (ImageView) v.findViewById(R.id.LargeProfileImage);
+        UsernameDisplay = (TextView) v.findViewById(R.id.UsernameDisplay);
+        JoinDate = (TextView) v.findViewById(R.id.JoinDate);
+
         UserServ.GetUser(prefs.getInt("user-id",0));
         return v;
     }

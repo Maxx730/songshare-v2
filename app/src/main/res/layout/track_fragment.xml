@@ -13,39 +13,73 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
 
+        <ImageView
+            android:id="@+id/TrackAlbumArt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@android:color/transparent" />
+
+        <ImageView
+            android:id="@+id/SmallArtwork"
+            android:layout_width="256dp"
+            android:layout_height="256dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:elevation="6dp"
+            app:srcCompat="@color/colorPrimary" />
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView3"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/track_name"
-            android:fontFamily="@font/cabin"
-            android:padding="15dp"
-            android:text="@string/track_fragment_track"
-            android:textSize="24sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/cabin"
-            android:paddingLeft="15dp"
-            android:paddingBottom="5dp"
-            android:text="@string/track_fragment_artist" />
+            <TextView
+                android:id="@+id/TrackTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/track_name"
+                android:ellipsize="end"
+                android:fontFamily="@font/cabin"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:text="@string/track_fragment_track"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/TrackArtist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cabin"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="3dp"
+                android:text="@string/track_fragment_artist" />
+
+            <TextView
+                android:id="@+id/SharedBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:text="Shared By " />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/TrackLikeButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/cabin"
-            android:paddingLeft="15dp"
-            android:text="@string/track_fragment_album" />
-    </LinearLayout>
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            app:srcCompat="@drawable/ic_twotone_favorite_24px" />
+
+    </RelativeLayout>
 </LinearLayout>

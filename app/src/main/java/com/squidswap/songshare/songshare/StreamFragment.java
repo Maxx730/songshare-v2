@@ -9,8 +9,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import NetworkServices.NetworkResponseInterface;
+import NetworkServices.TrackService;
 import UiServices.StreamPageAdapter;
 import UiServices.TrackTransformer;
 
@@ -24,13 +34,11 @@ import UiServices.TrackTransformer;
  * create an instance of this fragment.
  */
 public class StreamFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
     private OnFragmentInteractionListener mListener;
     private static ViewPager StreamPager;
     private StreamPageAdapter StreamAdapter;
+    private TrackService tracks;
+    private ProgressBar Loading;
 
     public StreamFragment() {
     }
@@ -38,8 +46,6 @@ public class StreamFragment extends Fragment {
     public static StreamFragment newInstance(String param1, String param2) {
         StreamFragment fragment = new StreamFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,15 +62,33 @@ public class StreamFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.stream_screen, container, false);
+        final View layout = inflater.inflate(R.layout.stream_screen, container, false);
+        Loading = (ProgressBar) layout.findViewById(R.id.LoadingStreams);
 
-        StreamPager = (ViewPager) layout.findViewById(R.id.TrackPager);
-        StreamAdapter = new StreamPageAdapter(getChildFragmentManager());
+        tracks = new TrackService(getActivity().getApplicationContext(), new NetworkResponseInterface() {
+            @Override
+            public void OnResponse(JSONObject response) {
+                try{
+                    Loading.setVisibility(View.GONE);
+                    JSONArray tracks = response.getJSONArray("PAYLOAD");
+                    StreamPager = (ViewPager) layout.findViewById(R.id.TrackPager);
+                    StreamAdapter = new StreamPageAdapter(getChildFragmentManager(),tracks);
 
-        StreamPager.setOffscreenPageLimit(3);
-        StreamPager.setPageTransformer(true, new TrackTransformer());
-        StreamPager.setAdapter(StreamAdapter);
-        ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) StreamPager.getLayoutParams();
+                    StreamPager.setOffscreenPageLimit(3);
+                    StreamPager.setPageTransformer(true, new TrackTransformer());
+                    StreamPager.setAdapter(StreamAdapter);
+                    ViewGroup.LayoutParams params = (ViewGroup.LayoutParams) StreamPager.getLayoutParams();
+                }catch(JSONException e){
+                    Log.d("STREAM FRAGMENT :::: ","Error grabbing shared tracks...");
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        tracks.PullStream(1);
+        //Once the fragment has been initialized, we want to load all the shared streams for
+        //the given user.
+
 
         return layout;
     }
@@ -72,8 +96,6 @@ public class StreamFragment extends Fragment {
     public void RefreshPager(){
         StreamPager.setAdapter(StreamAdapter);
     }
-
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
