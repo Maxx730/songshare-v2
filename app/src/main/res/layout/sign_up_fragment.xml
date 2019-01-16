@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,124 +11,183 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/LoginBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/back_to_login" />
-    </LinearLayout>
+        android:orientation="vertical"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:background="@drawable/bordered_layout"
         android:clipToPadding="false"
         android:elevation="6dp"
         android:orientation="vertical"
         android:padding="20dp">
 
-        <TextView
-            android:id="@+id/textView11"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:text="Username" />
-
-        <EditText
-            android:id="@+id/SignUpUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:background="@drawable/white_outline_textfield"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:clipToPadding="false"
+            android:elevation="10dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:paddingLeft="10dp"
-            android:text="Password" />
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:alpha=".2"
+                android:background="@drawable/border_right"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
+                app:srcCompat="@drawable/ic_twotone_person_outline_24px" />
 
-        <EditText
-            android:id="@+id/SignUpPasswordRepeat"
+            <EditText
+                android:id="@+id/SignUpUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="Username"
+                android:inputType="textPersonName"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:background="@drawable/white_outline_textfield"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:clipToPadding="false"
+            android:elevation="10dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:paddingLeft="10dp"
-            android:text="Password" />
+            <ImageView
+                android:id="@+id/imageView10"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:alpha=".2"
+                android:background="@drawable/border_right"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
+                app:srcCompat="@drawable/ic_twotone_https_24px" />
 
-        <EditText
-            android:id="@+id/SignUpPassword"
+            <EditText
+                android:id="@+id/SignUpPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:background="@drawable/white_outline_textfield"
-            android:ems="10"
-            android:inputType="textPassword"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:clipToPadding="false"
+            android:elevation="10dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:paddingLeft="10dp"
-            android:text="E-Mail" />
+            <ImageView
+                android:id="@+id/imageView12"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:alpha=".2"
+                android:background="@drawable/border_right"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
+                app:srcCompat="@drawable/ic_twotone_https_24px" />
 
-        <EditText
-            android:id="@+id/SignUpEmail"
+            <EditText
+                android:id="@+id/SignUpPasswordRepeat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="Repeat"
+                android:inputType="textPassword"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
             android:background="@drawable/white_outline_textfield"
-            android:ems="10"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:clipToPadding="false"
+            android:elevation="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView13"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:alpha=".2"
+                android:background="@drawable/border_right"
+                android:paddingTop="13dp"
+                android:paddingBottom="13dp"
+                app:srcCompat="@drawable/ic_twotone_email_24px" />
+
+            <EditText
+                android:id="@+id/SignUpEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/EULACheckbox"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/sign_up_text" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/TermsOfService"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:text=" Terms and Service"
-                android:textStyle="bold|italic" />
+                <CheckBox
+                    android:id="@+id/EULACheckbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/cabin"
+                    android:text="@string/sign_up_text" />
+
+                <TextView
+                    android:id="@+id/TermsOfService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/cabin"
+                    android:text=" Terms and Service"
+                    android:textStyle="bold|italic" />
+
+            </LinearLayout>
+
         </LinearLayout>
 
         <Button
@@ -135,7 +195,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
-            android:text="Button" />
+            android:background="@drawable/ui_button"
+            android:text="SignUp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ui_button"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="13dp"
+                android:text="SIGNUP"
+                android:textColor="@android:color/background_light" />
+
+            <ImageView
+                android:id="@+id/imageView14"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:tint="@android:color/background_light"
+                app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

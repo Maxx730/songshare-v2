@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/maps/ic_local_activity_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_navigate_next_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,8 +34,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_twotone_favorite_24px" />
-                            <entry key="sourceFile" value="C:\Users\John\Downloads\twotone-favorite-24px.svg" />
+                            <entry key="outputName" value="ic_twotone_email_24px" />
+                            <entry key="sourceFile" value="C:\Users\John\Downloads\twotone-email-24px.svg" />
                           </map>
                         </option>
                       </PersistentState>

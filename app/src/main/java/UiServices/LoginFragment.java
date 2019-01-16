@@ -65,6 +65,7 @@ public class LoginFragment extends Fragment {
 
                         edit.putInt("logged-in",1);
                         edit.putInt("user-id",response.getJSONObject("PAYLOAD").getInt("_id"));
+                        edit.putString("user-data",response.getJSONObject("PAYLOAD").toString());
                         edit.commit();
 
                         Intent i = new Intent(getActivity().getApplicationContext(),MainFragmentManager.class);

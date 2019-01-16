@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +21,15 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import NetworkServices.NetworkResponseInterface;
@@ -41,11 +47,13 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
     private FrameLayout Content,MenuTouch;
     private FragmentTransaction trans;
     private StreamFragment streams;
-    private LinearLayout NavTop,StreamToggle,ProfileToggle,SettingsToggle;
+    private LinearLayout NavTop,StreamToggle,ProfileToggle,SettingsToggle,DetailsCard;
     private SharedPreferences shared;
-    private ValueAnimator ValueAnim,SlideOut;
+    private ValueAnimator ValueAnim,SlideOut,SlideUp,SlideDown;
     private FragmentTransaction frag;
     private StreamFragment streamfrag;
+    private TextView MenuUser;
+    private ImageView MenuImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +66,29 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
         ValueAnim = ValueAnimator.ofInt(0,900);
         SlideOut = ValueAnimator.ofInt(900,0);
 
+        DisplayMetrics met = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(met);
+
+        SlideUp = ValueAnimator.ofInt(0,(int) (met.heightPixels / 3) * 2);
+        SlideDown = ValueAnimator.ofInt((int) (met.heightPixels / 3) * 2,0);
+
         shared = getSharedPreferences("songshare-prefs",MODE_PRIVATE);
 
         //Check if the user has logged in or not, if not send them back to the login screen
         if(shared.getInt("logged-in",0) == 1){
             SetListeners();
             InitElements();
+
+            if(shared.contains("user-data")){
+                try{
+                    JSONObject obj = new JSONObject(shared.getString("user-data",""));
+
+                    MenuUser.setText(obj.getString("username"));
+                    Glide.with(getApplicationContext()).load(obj.getString("profile")).into(MenuImage);
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
 
             frag = getSupportFragmentManager().beginTransaction();
             streamfrag = new StreamFragment();
@@ -86,6 +111,9 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
         NavTop = (LinearLayout) findViewById(R.id.NavTop);
         MenuTouch = (FrameLayout) findViewById(R.id.MenuTouchLayout);
         MenuShade = (RelativeLayout) findViewById(R.id.MenuShade);
+        MenuUser = (TextView) findViewById(R.id.MenuUserName);
+        MenuImage = (ImageView) findViewById(R.id.CircleUserProfile);
+        DetailsCard = (LinearLayout) findViewById(R.id.DetailsCard);
 
         ValueAnim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -110,6 +138,37 @@ public class MainFragmentManager extends AppCompatActivity implements StreamFrag
             }
         });
         SlideOut.setDuration(ANIM_LENGTH);
+
+        SlideUp.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                ViewGroup.LayoutParams lay = DetailsCard.getLayoutParams();
+                lay.height = value;
+                DetailsCard.setLayoutParams(lay);
+            }
+        });
+        SlideUp.setDuration(ANIM_LENGTH);
+
+        SlideDown.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int) animation.getAnimatedValue();
+                ViewGroup.LayoutParams lay = DetailsCard.getLayoutParams();
+                lay.height = value;
+                DetailsCard.setLayoutParams(lay);
+            }
+        });
+        SlideDown.setDuration(ANIM_LENGTH);
+
+        DetailsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MenuShade.setVisibility(View.GONE);
+                SlideDown.start();
+            }
+        });
+
 
         InitClickEvents();
     }
